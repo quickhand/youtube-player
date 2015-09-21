@@ -6,9 +6,7 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _bluebird = require('bluebird');
-
-var _bluebird2 = _interopRequireDefault(_bluebird);
+var _es6Promise = require('es6-promise');
 
 var _loadScript = require('load-script');
 
@@ -24,7 +22,7 @@ exports['default'] = function () {
      * @param {Function} resolve
      * @member {Object} iframeAPIReady
      */
-    iframeAPIReady = new _bluebird2['default'](function (resolve) {
+    iframeAPIReady = new _es6Promise.Promise(function (resolve) {
         var previous = undefined;
 
         previous = global.onYouTubeIframeAPIReady;

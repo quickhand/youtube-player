@@ -16,9 +16,7 @@ var _sister = require('sister');
 
 var _sister2 = _interopRequireDefault(_sister);
 
-var _bluebird = require('bluebird');
-
-var _bluebird2 = _interopRequireDefault(_bluebird);
+var _es6Promise = require('es6-promise');
 
 var _functionNames = require('./functionNames');
 
@@ -132,20 +130,12 @@ exports['default'] = function (elementId) {
 
     options.events = YouTubePlayer.proxyEvents(emitter);
 
-    playerAPIReady = new _bluebird2['default'](function (resolve) {
+    playerAPIReady = new _es6Promise.Promise(function (resolve) {
         youtubeIframeAPI.then(function (YT) {
             return new YT.Player(elementId, options);
         }).then(function (player) {
             emitter.on('ready', function () {
                 resolve(player);
-
-                // Until Proxies become available, this is the only way to Promisify the SDK.
-                /*
-                methods = _.map(_.functions(player), function (name) {
-                    return '\'' + name + '\'';
-                });
-                 console.log(methods.join(', '));
-                */
             });
         });
     });
