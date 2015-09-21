@@ -1,9 +1,9 @@
 import Sister from 'sister';
-import Bluebird from 'bluebird';
+import {Promise} from 'es6-promise';
 import functionNames from './functionNames';
 import eventNames from './eventNames';
 import loadYouTubeIframeAPI from './loadYouTubeIframeAPI';
-import _ from 'lodash';
+import {capitalize, forEach as _forEach} from 'lodash';
 
 let YouTubePlayer,
     youtubeIframeAPI;
@@ -25,10 +25,10 @@ YouTubePlayer.proxyEvents = (emitter) => {
 
     events = {};
 
-    _.forEach(eventNames, (eventName) => {
+    _forEach(eventNames, (eventName) => {
         let onEventName;
 
-        onEventName = `on${_.capitalize(eventName)}`;
+        onEventName = `on${capitalize(eventName)}`;
 
         events[onEventName] = (event) => {
             emitter.trigger(eventName, event);
@@ -50,7 +50,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady) => {
 
     functions = {};
 
-    _.forEach(functionNames, (functionName) => {
+    _forEach(functionNames, (functionName) => {
         functions[functionName] = (...args) => {
             return playerAPIReady
                 .then((player) => {
@@ -97,7 +97,7 @@ export default (elementId, options = {}) => {
 
     options.events = YouTubePlayer.proxyEvents(emitter);
 
-    playerAPIReady = new Bluebird((resolve) => {
+    playerAPIReady = new Promise((resolve) => {
         youtubeIframeAPI
             .then((YT) => {
                 return new YT.Player(elementId, options);
@@ -105,15 +105,6 @@ export default (elementId, options = {}) => {
             .then((player) => {
                 emitter.on(`ready`, () => {
                     resolve(player);
-
-                    // Until Proxies become available, this is the only way to Promisify the SDK.
-                    /*
-                    methods = _.map(_.functions(player), function (name) {
-                        return '\'' + name + '\'';
-                    });
-
-                    console.log(methods.join(', '));
-                    */
                 });
             });
     });

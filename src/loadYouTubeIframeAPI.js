@@ -1,4 +1,4 @@
-import Bluebird from 'bluebird';
+import {Promise} from 'es6-promise';
 import load from 'load-script';
 
 export default () => {
@@ -11,7 +11,7 @@ export default () => {
      * @param {Function} resolve
      * @member {Object} iframeAPIReady
      */
-    iframeAPIReady = new Bluebird((resolve) => {
+    iframeAPIReady = new Promise((resolve) => {
         let previous;
 
         previous = global.onYouTubeIframeAPIReady;
