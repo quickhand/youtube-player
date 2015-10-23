@@ -141,7 +141,9 @@ exports['default'] = function (elementId) {
     });
 
     playerAPI = YouTubePlayer.promisifyPlayer(playerAPIReady);
-    playerAPI.on = emitter.on;
+    playerAPI.on = function (eventName, fn, context) {
+        emitter.on(eventName, fn, context);
+    };
 
     return playerAPI;
 };

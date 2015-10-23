@@ -110,7 +110,9 @@ export default (elementId, options = {}) => {
     });
 
     playerAPI = YouTubePlayer.promisifyPlayer(playerAPIReady);
-    playerAPI.on = emitter.on;
+    playerAPI.on = (eventName, fn, context) => {
+        emitter.on(eventName, fn, context);
+    };
 
     return playerAPI;
 };

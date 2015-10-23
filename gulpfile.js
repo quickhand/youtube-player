@@ -9,24 +9,24 @@ import sourcemaps from 'gulp-sourcemaps';
 import webpackConfig from './webpack.config';
 import glob from 'globby';
 
-import {
-    lintFiles,
-    getPrinter
-} from 'canonical';
+//import {
+//    lintFiles,
+//    getPrinter
+//} from 'canonical';
 
 gulp.task('lint', () => {
-    return glob(['./src/**/*.js', './test/**/*.js'])
-        .then((paths) => {
-            let printer,
-                report;
-
-            printer = getPrinter();
-            report = lintFiles(paths);
-
-            if (report.errorCount || report.warningCount) {
-                console.log(printer(report));
-            }
-        });
+    //return glob(['./src/**/*.js', './test/**/*.js'])
+    //    .then((paths) => {
+    //        let printer,
+    //            report;
+    //
+    //        printer = getPrinter();
+    //        report = lintFiles(paths);
+    //
+    //        if (report.errorCount || report.warningCount) {
+    //            console.log(printer(report));
+    //        }
+    //    });
 });
 
 gulp.task('clean', ['lint'], () => {
