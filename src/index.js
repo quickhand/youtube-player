@@ -1,4 +1,4 @@
-import Sister from 'sister';
+import EventEmitter from 'eventemitter3';
 import {Promise} from 'es6-promise';
 import functionNames from './functionNames';
 import eventNames from './eventNames';
@@ -17,7 +17,7 @@ youtubeIframeAPI = loadYouTubeIframeAPI();
  *
  * @todo Capture event parameters.
  * @see https://developers.google.com/youtube/iframe_api_reference#Events
- * @param {Sister} emitter
+ * @param {EventEmmitter} emitter
  * @return {Object}
  */
 YouTubePlayer.proxyEvents = (emitter) => {
@@ -31,7 +31,7 @@ YouTubePlayer.proxyEvents = (emitter) => {
         onEventName = `on${capitalize(eventName)}`;
 
         events[onEventName] = (event) => {
-            emitter.trigger(eventName, event);
+            emitter.emit(eventName, event);
         };
     });
 
@@ -85,7 +85,7 @@ export default (elementId, options = {}) => {
         playerAPIReady;
 
     playerAPI = {};
-    emitter = Sister();
+    emitter = new EventEmitter();
 
     if (options.events) {
         throw new Error(`Event handlers cannot be overwritten.`);
