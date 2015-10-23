@@ -12,9 +12,9 @@ Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-var _sister = require('sister');
+var _eventemitter3 = require('eventemitter3');
 
-var _sister2 = _interopRequireDefault(_sister);
+var _eventemitter32 = _interopRequireDefault(_eventemitter3);
 
 var _es6Promise = require('es6-promise');
 
@@ -44,7 +44,7 @@ youtubeIframeAPI = (0, _loadYouTubeIframeAPI2['default'])();
  *
  * @todo Capture event parameters.
  * @see https://developers.google.com/youtube/iframe_api_reference#Events
- * @param {Sister} emitter
+ * @param {EventEmmitter} emitter
  * @return {Object}
  */
 YouTubePlayer.proxyEvents = function (emitter) {
@@ -58,7 +58,7 @@ YouTubePlayer.proxyEvents = function (emitter) {
         onEventName = 'on' + (0, _lodashStringCapitalize3['default'])(eventName);
 
         events[onEventName] = function (event) {
-            emitter.trigger(eventName, event);
+            emitter.emit(eventName, event);
         };
     });
 
@@ -118,7 +118,7 @@ exports['default'] = function (elementId) {
         playerAPIReady = undefined;
 
     playerAPI = {};
-    emitter = (0, _sister2['default'])();
+    emitter = new _eventemitter32['default']();
 
     if (options.events) {
         throw new Error('Event handlers cannot be overwritten.');
