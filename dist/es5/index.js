@@ -11,6 +11,8 @@ var _lodashStringCapitalize3 = _interopRequireDefault(_lodashStringCapitalize2);
 Object.defineProperty(exports, '__esModule', {
     value: true
 });
+exports.preLoadAPI = preLoadAPI;
+exports.youTubePlayer = youTubePlayer;
 
 var _eventemitter3 = require('eventemitter3');
 
@@ -36,7 +38,11 @@ var YouTubePlayer = undefined,
     youtubeIframeAPI = undefined;
 
 YouTubePlayer = {};
-youtubeIframeAPI = (0, _loadYouTubeIframeAPI2['default'])();
+
+function preLoadAPI() {
+    youtubeIframeAPI = (0, _loadYouTubeIframeAPI2['default'])();
+    return youtubeIframeAPI;
+}
 
 /**
  * Construct an object that defines an event handler for all of the
@@ -110,7 +116,7 @@ YouTubePlayer.promisifyPlayer = function (playerAPIReady) {
  * @return {Object}
  */
 
-exports['default'] = function (elementId) {
+function youTubePlayer(elementId) {
     var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
     var emitter = undefined,
@@ -126,6 +132,10 @@ exports['default'] = function (elementId) {
 
     if (typeof elementId === 'string' && !document.getElementById(elementId)) {
         throw new Error('Element "#' + elementId + '" does not exist.');
+    }
+
+    if (youtubeIframeAPI == null) {
+        preLoadAPI();
     }
 
     options.events = YouTubePlayer.proxyEvents(emitter);
@@ -146,7 +156,7 @@ exports['default'] = function (elementId) {
     };
 
     return playerAPI;
-};
+}
 
-module.exports = exports['default'];
+;
 //# sourceMappingURL=index.js.map

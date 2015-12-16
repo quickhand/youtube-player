@@ -9,7 +9,13 @@ let YouTubePlayer,
     youtubeIframeAPI;
 
 YouTubePlayer = {};
-youtubeIframeAPI = loadYouTubeIframeAPI();
+
+export function preLoadAPI() {
+    youtubeIframeAPI = loadYouTubeIframeAPI();
+    return youtubeIframeAPI;
+}
+
+
 
 /**
  * Construct an object that defines an event handler for all of the
@@ -79,7 +85,7 @@ YouTubePlayer.promisifyPlayer = (playerAPIReady) => {
  * @param {YouTubePlayer~options} options
  * @return {Object}
  */
-export default (elementId, options = {}) => {
+export function youTubePlayer(elementId, options = {})  {
     let emitter,
         playerAPI,
         playerAPIReady;
@@ -93,6 +99,10 @@ export default (elementId, options = {}) => {
 
     if (typeof elementId === `string` && !document.getElementById(elementId)) {
         throw new Error(`Element "#${elementId}" does not exist.`);
+    }
+
+    if(youtubeIframeAPI == null) {
+        preLoadAPI();
     }
 
     options.events = YouTubePlayer.proxyEvents(emitter);
